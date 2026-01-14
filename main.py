@@ -67,6 +67,7 @@ def main():
 	except Exception as e:
 		log_lines.append(f"Error al enviar el mensaje: {e}")
 		print(log_lines[-1])
+		
 	# Guardar todo en log.txt con timestamp
 	with open("log.txt", "a", encoding="utf-8") as f:
 		f.write("\n--- Ejecución: " + time.strftime("%Y-%m-%d %H:%M:%S") + " ---\n")
