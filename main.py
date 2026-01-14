@@ -51,17 +51,27 @@ def main():
 
 	time.sleep(2)
 	client = Client(TWILIO_SID, TWILIO_AUTH_TOKEN)
-	print(f"Enviando desde: {PHONE_NUMBER} a: {MY_PHONE_NUMBER}")
-	print(f"Mensaje: {mensaje}")
+	log_lines = []
+	log_lines.append(f"Enviando desde: {PHONE_NUMBER} a: {MY_PHONE_NUMBER}")
+	log_lines.append(f"Mensaje: {mensaje}")
+	print(log_lines[0])
+	print(log_lines[1])
 	try:
 		message = client.messages.create(
 			body=mensaje,
 			from_=PHONE_NUMBER,
 			to=MY_PHONE_NUMBER
 		)
-		print("mensaje enviado " + message.sid)
+		log_lines.append("mensaje enviado " + message.sid)
+		print(log_lines[-1])
 	except Exception as e:
-		print("Error al enviar el mensaje:", e)
+		log_lines.append(f"Error al enviar el mensaje: {e}")
+		print(log_lines[-1])
+	# Guardar todo en log.txt con timestamp
+	with open("log.txt", "a", encoding="utf-8") as f:
+		f.write("\n--- Ejecución: " + time.strftime("%Y-%m-%d %H:%M:%S") + " ---\n")
+		for line in log_lines:
+			f.write(line + "\n")
 
 if __name__ == "__main__":
 	main()
